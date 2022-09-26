@@ -1,12 +1,26 @@
-function bottlesOfBear(){
-    let bottles = 99;
-
-    while(bottles > 0){
-        console.log(bottles+" bottles of beer on the wall, "+bottles+" bottles of beer.");
-        bottles --;
-        console.log("Take one down and pass it around, "+bottles+" bottles of beer on the wall.");
+class Bottles {
+    song() {
+        return this.verses(99,0)
     }
-    console.log("No more bottles of beer on the wall, no more bottles of beer.\nGo to the store and buy some more, 99 bottles of beer on the wall.");
+    verses(hi,lo) {
+        return downTo(hi,lo).map(n => this.verse(n)).join('\n');
+    }
+    verse(n){
+        return (`${n === 0 ? 'No more' : n} bottle${n === 1 ? '' : 's'} of beer.\n`+
+        ' of beer on the wall, ' +
+        `${n === 0 ? 'no more' : n} bottle${n === 1 ? '' : 's'} of beer.\n` +
+        `${n > 0 ? `Take ${n > 1 ?'one' : 'it'} down and pass it around` 
+            : 'Go to the store and buy some more'}, `+
+        `${n-1 < 0 ? 99 : n - 1 === 0 ? 'no more' : n-1} bottle${n-1 === 1 ? '':'s'}`+
+        ' of beer on the wall.\n'
+        );
+    } 
 }
 
-bottlesOfBear();
+const downTo = (max,min) => {
+    const numbers = [];
+    for (let n = max; n >= min; n--) {
+        numbers.push(n);
+    }
+    return numbers;
+}
