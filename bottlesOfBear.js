@@ -46,3 +46,18 @@ class Bottles {
         }
     }
 }
+
+class Verse {
+    constructor(number, lyrics) {
+        this.number = number;
+        this.lyrics = lyrics;
+    }
+
+    number(){
+        return this.number;
+    }
+
+    text(){
+        return this.lyrics(this);
+    }
+}
