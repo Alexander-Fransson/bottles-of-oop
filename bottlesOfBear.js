@@ -1,4 +1,4 @@
-class Bottles{
+module.exports = class Bottles{
     song(){
         return this.verses(99,0);
     }

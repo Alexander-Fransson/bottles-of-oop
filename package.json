@@ -1,0 +1,23 @@
+{
+  "name": "bottles-of-oop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bottlesOfBear.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ntijoh-Alexander-Fransson/bottles-of-oop.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ntijoh-Alexander-Fransson/bottles-of-oop/issues"
+  },
+  "homepage": "https://github.com/ntijoh-Alexander-Fransson/bottles-of-oop#readme",
+  "devDependencies": {
+    "jest": "^29.1.1"
+  }
+}
