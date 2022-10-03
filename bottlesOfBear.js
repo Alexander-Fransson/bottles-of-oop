@@ -4,9 +4,17 @@ module.exports = class Bottles{
     }
 
     verses(upper, lower){
-        return downTo(upper, lower)
+        return this.downTo(upper, lower)
             .map(i => this.verse(i))
             .join('\n');
+    }
+
+    downTo(upper,lower){
+        const numbers = [];
+        for (let n = upper; n >= lower; n--) {
+            numbers.push(n);
+        }
+        return numbers;
     }
 
     verse(number){
