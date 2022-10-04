@@ -78,4 +78,6 @@ describe('Bottles', () => {
         '99 bottles of beer on the wall.\n';
         expect(new Bottles().verses(2,0)).toBe(expected);
     })
+
+    //man borde egentligen testa song också men jag orkar inte
 });
