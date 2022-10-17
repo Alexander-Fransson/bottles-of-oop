@@ -44,6 +44,22 @@ module.exports = class Bottles{
         }
     }
 
+    pronoun(number){
+        if(number === 1){
+            return 'it';
+        }else{
+            return 'one';
+        }
+    }
+
+    quantity(number){
+        if(number === 0){
+            return 'no more';
+        }else{
+            return number;
+        }
+    }
+
     verse(number){
         switch (number) {
             case 0:
@@ -53,27 +69,12 @@ module.exports = class Bottles{
                     'Go to the store and buy some more, '+
                     `${number + 99} ${this.container(number + 99)} of beer on the wall.\n`
                 );
-            case 1:
-                return(
-                    `1 more ${this.container(number)} of beer on the wall, `+
-                    `1 more ${this.container(number)} of beer.\n`+
-                    'Take it down and pass it around, '+
-                    `no more ${this.container(number -1)} of bear on the wall.\n`
-                );
-            case 2:
-                return(
-                    `${number} ${this.container(number)} of beer on the wall, `+
-                    `${number} ${this.container(number)} of beer.\n`+
-                    `Take one down and pass it around, `+
-                    `${number -1} more ${this.container(number -1)} of beer on the wall.\n`
-                );
-                        
             default:
                 return(
                     `${number} ${this.container(number)} of beer on the wall, `+
                     `${number} ${this.container(number)} of beer.\n`+
-                    `Take one down and pass it around, `+
-                    `${number -1} ${this.container(number -1)} of beer on the wall.\n`
+                    `Take ${this.pronoun(number)} down and pass it around, `+
+                    `${this.quantity(number-1)} ${this.container(number -1)} of beer on the wall.\n`
                 );
         }
     }
