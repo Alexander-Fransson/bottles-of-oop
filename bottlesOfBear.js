@@ -56,24 +56,38 @@ module.exports = class Bottles{
         if(number === 0){
             return 'no more';
         }else{
-            return number;
+            return number.toString();
         }
+    }
+
+    capitalize(string){
+        const [hd, ...tl] = string;
+        const firstLetter = hd.toUpperCase();
+        return [firstLetter, ...tl].join('');
+    }
+
+    action(number){
+        if(number === 0){
+            return 'Go to the store and buy some more';
+        }else{
+            return `Take ${this.pronoun(number)} down and pass it around`;
+        } 
     }
 
     verse(number){
         switch (number) {
             case 0:
                 return(
-                    `No more ${this.container(number)} of beer on the wall, `+
-                    `no more ${this.container(number)} of beer.\n`+
-                    'Go to the store and buy some more, '+
+                    `${this.capitalize(this.quantity(number))} ${this.container(number)} of beer on the wall, `+
+                    `${this.quantity(number)} ${this.container(number)} of beer.\n`+
+                    `${this.action(number)}, `+
                     `${number + 99} ${this.container(number + 99)} of beer on the wall.\n`
                 );
             default:
                 return(
-                    `${number} ${this.container(number)} of beer on the wall, `+
-                    `${number} ${this.container(number)} of beer.\n`+
-                    `Take ${this.pronoun(number)} down and pass it around, `+
+                    `${this.capitalize(this.quantity(number).toString())} ${this.container(number)} of beer on the wall, `+
+                    `${this.quantity(number)} ${this.container(number)} of beer.\n`+
+                    `${this.action(number)}, `+
                     `${this.quantity(number-1)} ${this.container(number -1)} of beer on the wall.\n`
                 );
         }
