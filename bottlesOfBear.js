@@ -7,6 +7,8 @@ classer ska vara solida vileket står för
     * Dependency inversion (att de ska bero på abstrakta saker)
 */
 
+const { number } = require("yargs");
+
 
 /*
 namn på funktioner ska vara en abstraktion av funktionens potentiella output 
@@ -74,6 +76,14 @@ module.exports = class Bottles{
         } 
     }
 
+    successor(number){
+        if(number === 0){
+            return 99;
+        }else{
+            return number - 1;
+        }
+    }
+
     verse(number){
         switch (number) {
             case 0:
@@ -81,14 +91,14 @@ module.exports = class Bottles{
                     `${this.capitalize(this.quantity(number))} ${this.container(number)} of beer on the wall, `+
                     `${this.quantity(number)} ${this.container(number)} of beer.\n`+
                     `${this.action(number)}, `+
-                    `${number + 99} ${this.container(number + 99)} of beer on the wall.\n`
+                    `${this.quantity(this.successor(number))} ${this.container(this.successor(number))} of beer on the wall.\n`
                 );
             default:
                 return(
                     `${this.capitalize(this.quantity(number).toString())} ${this.container(number)} of beer on the wall, `+
                     `${this.quantity(number)} ${this.container(number)} of beer.\n`+
                     `${this.action(number)}, `+
-                    `${this.quantity(number-1)} ${this.container(number -1)} of beer on the wall.\n`
+                    `${this.quantity(this.successor(number))} ${this.container(this.successor(number))} of beer on the wall.\n`
                 );
         }
     }
