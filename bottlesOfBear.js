@@ -85,21 +85,11 @@ module.exports = class Bottles{
     }
 
     verse(number){
-        switch (number) {
-            case 0:
-                return(
-                    `${this.capitalize(this.quantity(number))} ${this.container(number)} of beer on the wall, `+
-                    `${this.quantity(number)} ${this.container(number)} of beer.\n`+
-                    `${this.action(number)}, `+
-                    `${this.quantity(this.successor(number))} ${this.container(this.successor(number))} of beer on the wall.\n`
-                );
-            default:
-                return(
-                    `${this.capitalize(this.quantity(number).toString())} ${this.container(number)} of beer on the wall, `+
-                    `${this.quantity(number)} ${this.container(number)} of beer.\n`+
-                    `${this.action(number)}, `+
-                    `${this.quantity(this.successor(number))} ${this.container(this.successor(number))} of beer on the wall.\n`
-                );
-        }
+        return(
+            `${this.capitalize(this.quantity(number).toString())} ${this.container(number)} of beer on the wall, `+
+            `${this.quantity(number)} ${this.container(number)} of beer.\n`+
+            `${this.action(number)}, `+
+            `${this.quantity(this.successor(number))} ${this.container(this.successor(number))} of beer on the wall.\n`
+        );
     }
 }
