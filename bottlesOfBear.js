@@ -38,34 +38,46 @@ module.exports = class Bottles{
         return numbers;
     }
 
-    container(number){
-        if(number === 1){
-            return 'bottle';
-        }else{
-            return 'bottles';
-        }
-    }
-
-    pronoun(number){
-        if(number === 1){
-            return 'it';
-        }else{
-            return 'one';
-        }
-    }
-
-    quantity(number){
-        if(number === 0){
-            return 'no more';
-        }else{
-            return number.toString();
-        }
-    }
-
     capitalize(string){
         const [hd, ...tl] = string;
         const firstLetter = hd.toUpperCase();
         return [firstLetter, ...tl].join('');
+    }
+
+    action(number){
+        return new BottleNumber(number).action(number);
+    }
+
+    successor(number){
+        return new BottleNumber(number).successor(number);
+    }
+
+    container(number){
+        return new BottleNumber(number).container(number);
+    }
+
+    pronoun(number){
+        return new BottleNumber(number).pronoun(number);
+    }
+
+    quantity(number){
+        return new BottleNumber(number).quantity();
+    }
+
+    verse(verse_number){
+        return(
+            `${this.capitalize(this.quantity(verse_number).toString())} ${this.container(verse_number)} of beer on the wall, `+
+            `${this.quantity(verse_number)} ${this.container(verse_number)} of beer.\n`+
+            `${this.action(verse_number)}, `+
+            `${this.quantity(this.successor(verse_number))} ${this.container(this.successor(verse_number))} of beer on the wall.\n`
+        );
+    }
+}
+
+class BottleNumber {
+
+    constructor(number){
+        this.number = number;
     }
 
     action(number){
@@ -84,12 +96,27 @@ module.exports = class Bottles{
         }
     }
 
-    verse(number){
-        return(
-            `${this.capitalize(this.quantity(number).toString())} ${this.container(number)} of beer on the wall, `+
-            `${this.quantity(number)} ${this.container(number)} of beer.\n`+
-            `${this.action(number)}, `+
-            `${this.quantity(this.successor(number))} ${this.container(this.successor(number))} of beer on the wall.\n`
-        );
+    container(number){
+        if(number === 1){
+            return 'bottle';
+        }else{
+            return 'bottles';
+        }
     }
-}
+
+    pronoun(number){
+        if(number === 1){
+            return 'it';
+        }else{
+            return 'one';
+        }
+    }
+
+    quantity(){
+        if(this.number === 0){
+            return 'no more';
+        }else{
+            return this.number.toString();
+        }
+    }
+} 
