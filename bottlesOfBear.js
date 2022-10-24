@@ -5,18 +5,13 @@ classer ska vara solida vileket står för
     * Liskov substitution (att de ska kunna göra allt som deras föräldrar kann)
     * Interface segregation (att de inte ska vara beroende av metoder de inte använder)
     * Dependency inversion (att de ska bero på abstrakta saker)
-*/
-
-const { number } = require("yargs");
-
-
-/*
+    
 namn på funktioner ska vara en abstraktion av funktionens potentiella output 
 tänk att alla outputs som kan komma ska kuna läggas under en kolumn i ett schema 
-*/
 
-/*
 med flocking menas att komplexa beteenden ska komma från änkla regler
+
+Bland de versta typerna av error är state mutation errors så undvik att mutera objekt states.
 */
 
 module.exports = class Bottles{
@@ -28,6 +23,18 @@ module.exports = class Bottles{
         return this.downTo(upper, lower)
             .map(i => this.verse(i))
             .join('\n');
+    }
+
+    verse(verse_number){
+        const bottleNumber = new BottleNumber(verse_number);
+        const nextBottlesNumber = new BottleNumber(bottleNumber.successor())
+
+        return(
+            `${this.capitalize(bottleNumber.quantity().toString())} ${bottleNumber.container()} of beer on the wall, `+
+            `${bottleNumber.quantity()} ${bottleNumber.container()} of beer.\n`+
+            `${bottleNumber.action()}, `+
+            `${nextBottlesNumber.quantity()} ${nextBottlesNumber.container()} of beer on the wall.\n`
+        );
     }
 
     downTo(upper,lower){
@@ -43,35 +50,6 @@ module.exports = class Bottles{
         const firstLetter = hd.toUpperCase();
         return [firstLetter, ...tl].join('');
     }
-
-    action(number){
-        return new BottleNumber(number).action(number);
-    }
-
-    successor(number){
-        return new BottleNumber(number).successor(number);
-    }
-
-    container(number){
-        return new BottleNumber(number).container(number);
-    }
-
-    pronoun(number){
-        return new BottleNumber(number).pronoun(number);
-    }
-
-    quantity(number){
-        return new BottleNumber(number).quantity();
-    }
-
-    verse(verse_number){
-        return(
-            `${this.capitalize(this.quantity(verse_number).toString())} ${this.container(verse_number)} of beer on the wall, `+
-            `${this.quantity(verse_number)} ${this.container(verse_number)} of beer.\n`+
-            `${this.action(verse_number)}, `+
-            `${this.quantity(this.successor(verse_number))} ${this.container(this.successor(verse_number))} of beer on the wall.\n`
-        );
-    }
 }
 
 class BottleNumber {
@@ -80,32 +58,32 @@ class BottleNumber {
         this.number = number;
     }
 
-    action(number){
-        if(number === 0){
+    action(){
+        if(this.number === 0){
             return 'Go to the store and buy some more';
         }else{
-            return `Take ${this.pronoun(number)} down and pass it around`;
+            return `Take ${this.pronoun()} down and pass it around`;
         } 
     }
 
-    successor(number){
-        if(number === 0){
+    successor(){
+        if(this.number === 0){
             return 99;
         }else{
-            return number - 1;
+            return this.number - 1;
         }
     }
 
-    container(number){
-        if(number === 1){
+    container(){
+        if(this.number === 1){
             return 'bottle';
         }else{
             return 'bottles';
         }
     }
 
-    pronoun(number){
-        if(number === 1){
+    pronoun(){
+        if(this.number === 1){
             return 'it';
         }else{
             return 'one';
