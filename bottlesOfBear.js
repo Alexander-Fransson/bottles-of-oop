@@ -12,6 +12,14 @@ tänk att alla outputs som kan komma ska kuna läggas under en kolumn i ett sche
 med flocking menas att komplexa beteenden ska komma från änkla regler
 
 Bland de versta typerna av error är state mutation errors så undvik att mutera objekt states.
+
+en dataklump är när flera funktioner alltid används tillsammans
+
+Om en klass har en to string metod är det den som aktiveras om klassen används som string i javascript. //Skumt
+
+a factory is a method whose role it is to return the right role playing object
+
+att skapa klasser för tillfellen kan vara bra för att få en överblick av vad som händer i ett tillfälle
 */
 
 module.exports = class Bottles{
@@ -26,14 +34,14 @@ module.exports = class Bottles{
     }
 
     verse(verse_number){
-        const bottleNumber = new BottleNumber(verse_number);
-        const nextBottlesNumber = new BottleNumber(bottleNumber.successor())
+        const bottleNumber = this.bottleNumberFor(verse_number); 
+        const nextBottlesNumber = this.bottleNumberFor(bottleNumber.successor());
 
         return(
-            `${this.capitalize(bottleNumber.quantity().toString())} ${bottleNumber.container()} of beer on the wall, `+
-            `${bottleNumber.quantity()} ${bottleNumber.container()} of beer.\n`+
+            `${this.capitalize(`${bottleNumber}`)} of beer on the wall, `+
+            `${bottleNumber} of beer.\n`+
             `${bottleNumber.action()}, `+
-            `${nextBottlesNumber.quantity()} ${nextBottlesNumber.container()} of beer on the wall.\n`
+            `${nextBottlesNumber} of beer on the wall.\n`
         );
     }
 
@@ -50,6 +58,24 @@ module.exports = class Bottles{
         const firstLetter = hd.toUpperCase();
         return [firstLetter, ...tl].join('');
     }
+
+    bottleNumberFor(verse_number){
+        let bottleNumberClass;
+
+        switch (verse_number) {
+            case 0:
+                bottleNumberClass = BottleNumber0;
+                break;
+            case 1:
+                bottleNumberClass = BottleNumber1;
+                break;
+            default:
+                bottleNumberClass = BottleNumber;
+                break;
+        }
+
+        return new bottleNumberClass(verse_number);
+    }
 }
 
 class BottleNumber {
@@ -58,43 +84,53 @@ class BottleNumber {
         this.number = number;
     }
 
-    action(){
-        if(this.number === 0){
-            return 'Go to the store and buy some more';
-        }else{
-            return `Take ${this.pronoun()} down and pass it around`;
-        } 
+    toString(){
+        return `${this.quantity()} ${this.container()}`;
+    }
+
+    action(){ 
+        return `Take ${this.pronoun()} down and pass it around`;
     }
 
     successor(){
-        if(this.number === 0){
-            return 99;
-        }else{
-            return this.number - 1;
-        }
+        return this.number - 1;
     }
 
     container(){
-        if(this.number === 1){
-            return 'bottle';
-        }else{
-            return 'bottles';
-        }
+        return 'bottles';
     }
 
     pronoun(){
-        if(this.number === 1){
-            return 'it';
-        }else{
-            return 'one';
-        }
+        return 'one';
     }
 
     quantity(){
-        if(this.number === 0){
-            return 'no more';
-        }else{
-            return this.number.toString();
-        }
+        return this.number.toString();
     }
 } 
+
+class BottleNumber0 extends BottleNumber{
+
+    quantity(){
+        return 'no more';
+    }
+
+    action(){
+        return 'Go to the store and buy some more';
+    }
+
+    successor() {
+        return 99;
+    }
+}
+
+class BottleNumber1 extends BottleNumber{
+    
+    container(){
+        return 'bottle';
+    }
+
+    pronoun(){
+        return 'it';
+    }
+}
