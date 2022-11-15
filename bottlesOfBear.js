@@ -34,14 +34,13 @@ module.exports = class Bottles{
     }
 
     verse(verse_number){
-        const bottleNumber = this.bottleNumberFor(verse_number); 
-        const nextBottlesNumber = this.bottleNumberFor(bottleNumber.successor());
+        const bottleNumber = BottleNumber.for(verse_number); 
 
         return(
             `${this.capitalize(`${bottleNumber}`)} of beer on the wall, `+
             `${bottleNumber} of beer.\n`+
             `${bottleNumber.action()}, `+
-            `${nextBottlesNumber} of beer on the wall.\n`
+            `${bottleNumber.successor()} of beer on the wall.\n`
         );
     }
 
@@ -57,24 +56,6 @@ module.exports = class Bottles{
         const [hd, ...tl] = string;
         const firstLetter = hd.toUpperCase();
         return [firstLetter, ...tl].join('');
-    }
-
-    bottleNumberFor(verse_number){
-        let bottleNumberClass;
-
-        switch (verse_number) {
-            case 0:
-                bottleNumberClass = BottleNumber0;
-                break;
-            case 1:
-                bottleNumberClass = BottleNumber1;
-                break;
-            default:
-                bottleNumberClass = BottleNumber;
-                break;
-        }
-
-        return new bottleNumberClass(verse_number);
     }
 }
 
@@ -93,7 +74,7 @@ class BottleNumber {
     }
 
     successor(){
-        return this.number - 1;
+        return BottleNumber.for(this.number - 1);
     }
 
     container(){
@@ -106,6 +87,25 @@ class BottleNumber {
 
     quantity(){
         return this.number.toString();
+    }
+
+    static for(verse_number){
+        
+        let bottleNumberClass;
+
+        switch (verse_number) {
+            case 0:
+                bottleNumberClass = BottleNumber0;
+                break;
+            case 1:
+                bottleNumberClass = BottleNumber1;
+                break;
+            default:
+                bottleNumberClass = BottleNumber;
+                break;
+        }
+
+        return new bottleNumberClass(verse_number);
     }
 } 
 
@@ -120,7 +120,7 @@ class BottleNumber0 extends BottleNumber{
     }
 
     successor() {
-        return 99;
+        return BottleNumber.for(99);
     }
 }
 
